@@ -1,41 +1,52 @@
-import { Input } from 'antd';
-import Head from 'next/head'
-import Login from '../componets/login';
-import styles from '../styles/Home.module.css';
+import { Tabs } from "antd";
+import Head from "next/head";
+import { useState } from "react";
+import Conquistas from "../../componets/conquistas";
+import ListBook from "../../componets/list";
+import Ranking from "../../componets/ranking";
 
 export default function Home() {
+
+  const [points, setPoints] = useState(0);
+  const [trofeus, setTrofeus] = useState({});
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Esse eu já li!</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className={styles.title}>
-          Esse eu já li! 📚
-        </h1>
-
-        <div className={styles.grid}>
-
-          <div
-            className={styles.card}
-          >
-            <h3>Login</h3>
-            <Login />
-          </div>
-        </div>
+        <h1>Esse eu já li! 📚</h1>
+        <Tabs
+          defaultActiveKey="1"
+          size={"large"}
+          items={[
+            {
+              label: `Livros 📚`,
+              key: "1",
+              children: <ListBook setPoints={setPoints} setTrofeus={setTrofeus} />,
+            },
+            {
+              label: `Suas Conquistas ✨`,
+              key: "3",
+              children: <Conquistas points={points} trofeus={trofeus} />,
+              forceRender: true,
+            },
+            {
+              label: `Ranking 🏆`,
+              key: "2",
+              children: <Ranking points={points} />,
+            },
+            
+          ]}
+        />
       </main>
-
 
       <style jsx>{`
         main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
+          padding: 2rem;
         }
         footer {
           width: 100%;
@@ -79,5 +90,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
